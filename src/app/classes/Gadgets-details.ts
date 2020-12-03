@@ -1,5 +1,6 @@
 export class GadgetDetails {
-
+    
+    companyName:string;
     emailId : string;
     model : string;
     serialNo : string;

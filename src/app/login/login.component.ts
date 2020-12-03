@@ -13,7 +13,8 @@ import { LoginService } from './login.service';
 })
 
 export class LoginComponent implements OnInit {
-  user:String;
+ user:String;
+ userDetails:any;
  displayValue=false;
  @Output() countChanged: EventEmitter<any> = new EventEmitter();
   private loginDetail = new LoginDetails();
@@ -42,17 +43,19 @@ export class LoginComponent implements OnInit {
              var statusCode = response.body.statusCode;
              console.log('Response Code ='+statusCode);
 
+             this.userDetails = response.body.object;
+             console.log("login comapny ="+this.userDetails.companyName);
+             sessionStorage.setItem("currentUser", this.EmailId.value); 
+             sessionStorage.setItem("companyName", this.userDetails.companyName);
+
              if(statusCode==201){
               alert(response.body.message);
               this.router.navigate(['/profile', response]);
               }
 
               else if (statusCode == 200) {
-               this.displayValue=true
+               this.displayValue=true;
                this.countChanged.emit(this.displayValue);
-                 
-              sessionStorage.setItem("currentUser", this.EmailId.value); 
-              this.user = this.EmailId.value;
               alert(response.body.message);
               this.router.navigate(['/profile', response]);
               }

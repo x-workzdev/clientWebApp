@@ -25,7 +25,7 @@ export class CreateTicketComponent implements OnInit {
     serialNo: new FormControl('', Validators.required),
     mcType : new FormControl('' , Validators.required),
     problem : new FormControl('' , Validators.required),
-    clientComment: new FormControl(),
+    clientComment: new FormControl('' , Validators.required),
   });
 
 CreateTicket(createTicket)

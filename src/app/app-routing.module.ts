@@ -5,6 +5,7 @@ import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ViewGadgetsComponent } from './gadgets/gadgets.component';
 import { CreateTicketComponent } from './create-ticket/create-ticket.component';
+import { TicketsComponent } from './tickets/tickets.component';
 
 
 const routes: Route[] = [
@@ -13,7 +14,8 @@ const routes: Route[] = [
   {path:'login', component:LoginComponent},
   {path:'createTicket', component: CreateTicketComponent},
   {path : 'profile',component : ProfileComponent},
-  {path : 'gadgets',component : ViewGadgetsComponent}
+  {path : 'gadgets',component : ViewGadgetsComponent},
+  {path : 'tickets',component : TicketsComponent}
 ];
 
 @NgModule({

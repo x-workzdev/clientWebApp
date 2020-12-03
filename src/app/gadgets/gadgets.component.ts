@@ -4,7 +4,7 @@ import {FormControl,FormGroup,Validators} from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import { GadgetDetails } from '../classes/Gadgets-details';
 import { Router } from '@angular/router';
-import { TicketDetails } from './TicketDetails';
+import {Location} from '@angular/common'
 import { CreateTicketService } from '../create-ticket/create-ticket.service';
 import { CreateTicketDetails } from '../create-ticket/CreateTicket';
 
@@ -15,8 +15,8 @@ import { CreateTicketDetails } from '../create-ticket/CreateTicket';
 })
 export class ViewGadgetsComponent implements OnInit {
   currentUser:string;
-  private createTicket = new CreateTicketDetails;
-  constructor(private gadgetService: GadgetService,private createTicketService : CreateTicketService, private router : Router) { }
+  private ticketDetails = new CreateTicketDetails();
+  constructor(private gadgetService: GadgetService,private createTicketService : CreateTicketService, public router : Router, public location: Location) { }
 
   gadgetsArray: any[] = [];
   dtOptions: DataTables.Settings = {};
@@ -27,26 +27,9 @@ export class ViewGadgetsComponent implements OnInit {
   gadget : GadgetDetails = new GadgetDetails();
   deleteMessage=false;
   gadgetlist:any;
-  isTicketRaised = false;   
+  isTicketRaised = false;  
+  currentCompanyName:string;
 
-  ngOnInit() {
-    this.isTicketRaised=false;
-    this.dtOptions = {
-      pageLength: 6,
-      stateSave:true,
-      lengthMenu:[[6, 16, 20, -1], [6, 16, 20, "All"]],
-      processing: true
-      };  
-    this.currentUser = sessionStorage.getItem("currentUser");
-    console.log('user in gadget='+this.currentUser);
-    this.gadgetService.getGadgetsList(this.currentUser).subscribe(data =>{  
-    this.gadgets = data;
-    console.log('got data from console='+this.gadgets);
-    this.dtTrigger.next();
-    })
-    
-  }
-  
   gadgetform=new FormGroup({
     emailId: new FormControl('' , Validators.required),
     model: new FormControl('' , Validators.required),
@@ -55,7 +38,9 @@ export class ViewGadgetsComponent implements OnInit {
     dateOfAssigne : new FormControl('' , Validators.required),
     status : new FormControl('' , Validators.required),
     companyName :new FormControl('' , Validators.required),
-    issue : new FormControl(),
+    problem : new FormControl(),
+    clientComment: new FormControl(),
+    complaintid: new FormControl(),
   });
 
   GadgetSelected(gadget:any){
@@ -64,13 +49,14 @@ export class ViewGadgetsComponent implements OnInit {
   }
 
   CreateTicket(createTicket){
-    this.createTicket.companyName = this.CompanyName.value;
-    this.createTicket.model = this.Model.value;
-    this.createTicket.serialNo = this.SerialNo.value;
-    this.createTicket.mcType = this.McType.value;
-    this.createTicket.problem = this.Issue.value;
+    this.ticketDetails.companyName = this.CompanyName.value;
+    this.ticketDetails.model = this.Model.value;
+    this.ticketDetails.serialNo = this.SerialNo.value;
+    this.ticketDetails.mcType = this.McType.value;
+    this.ticketDetails.problem = this.Problem.value;
+    this.ticketDetails.clientComment = this.ClientComment.value;
 
-    this.createTicketService.sendCreateTicketDetails(this.createTicket).subscribe(
+    this.createTicketService.sendCreateTicketDetails(this.ticketDetails).subscribe(
       response => {
         var records = JSON.stringify(response)     
         console.log("Response ="+records);
@@ -80,13 +66,13 @@ export class ViewGadgetsComponent implements OnInit {
 
         if(statusCode==201){
          alert(response.body.message);
-        // this.router.navigate(['/tickets', response]);
+         this.router.navigate(['/tickets', response]);
          }
 
          else if (statusCode == 200) {
          this.isTicketRaised = true;
-         console.log('ticket raised= '+this.isTicketRaised)
-        // this.router.navigate(['/tickets', response]);
+         console.log('ticket raised='+this.isTicketRaised);
+         //this.router.navigate(['/tickets']);
          }
         else
         {
@@ -112,7 +98,27 @@ export class ViewGadgetsComponent implements OnInit {
       );
   }
 
-  
+  ngOnInit() {
+    this.isTicketRaised=false;
+    this.dtOptions = {
+      pageLength: 10,
+      stateSave:true,
+      lengthMenu:[[10, 20, 30, -1], [10, 20, 30, "All"]],
+      processing: true
+      };  
+      this.currentCompanyName = sessionStorage.getItem("companyName");
+      console.log('companyName in tickets='+this.currentCompanyName);
+    this.gadgetService.getGadgetsList(this.currentCompanyName).subscribe(data =>{  
+    this.gadgets = data;
+    console.log('got data from console='+this.gadgets);
+    this.dtTrigger.next();
+    })
+    
+  }
+
+  onChange(){
+    this.isTicketRaised=true;
+  }
   
   get CompanyName(){
     return this.gadgetform.get('companyName');
@@ -135,18 +141,37 @@ export class ViewGadgetsComponent implements OnInit {
   }
 
   get DateOfAssigne(){
-    return this.gadgetform.get('dateOfAssigne');
+    return this.gadgetform.get('date');
   }
 
-  get Status(){
-    return this.gadgetform.get('status');
+  get ComplaintStatus(){
+    return this.gadgetform.get('complaintStatus');
   }
 
-  get Issue(){
-    return this.gadgetform.get('issue');
+  get Problem(){
+    return this.gadgetform.get('problem');
+  }
+
+  get ClientComment(){
+    return this.gadgetform.get('clientComment');
+  }
+
+  get Date(){
+    return this.gadgetform.get('date');
+  }
+  
+  get ComplaintId(){
+    return this.gadgetform.get('complaintId');
   }
 
   changeisUpdate(){
     this.isTicketRaised=false;
+  }
+
+  refresh(): void {
+    this.router.navigateByUrl("/home", { skipLocationChange: true }).then(() => {
+      console.log(decodeURI(this.location.path()));
+      this.router.navigate([decodeURI(this.location.path())]);
+    });
   }
 }

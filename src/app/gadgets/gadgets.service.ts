@@ -13,8 +13,8 @@ export class GadgetService {
 
   constructor(private httpClient: HttpClient, private router : Router) { }
 
-  getGadgetsList(emailId : String): Observable<any> {
-    return this.httpClient.get(environment.apiUrl+`viewGadgets/${emailId}`);
+  getGadgetsList(companyName : String): Observable<any> {
+    return this.httpClient.get(environment.apiUrl+`viewGadgets/${companyName}`);
   }
 
 }

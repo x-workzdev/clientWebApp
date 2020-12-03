@@ -13,19 +13,21 @@ export class AppComponent {
   userId:string;
   companyName:any;
   condition=false;
-  
+
   countChangedHandler(event:boolean){
     this.condition=event
     console.log("Success Event Handling="+this.condition);
     this.userId = sessionStorage.getItem("currentUser");
     this.companyName = sessionStorage.getItem("companyName");
-    console.log('current user='+this.userId)
+    console.log('current user='+this.userId);
+    console.log('current companyName='+this.companyName);
   }
 
   logout()
   { 
    this.condition=false;
    window.sessionStorage.removeItem("currentUser");
+   window.sessionStorage.removeItem("companyName");
    this.router.navigate(['/login']);
    }
  
