@@ -49,7 +49,7 @@
     <div class="modal" id="myModal">
       <div class="modal-dialog">
         <div class="modal-content">
-          <form [formGroup]="gadgetform" #createTicket (ngSubmit)="CreateTicket(createTicket)">
+          <form [formGroup]="gadgetform" #createTicket (ngSubmit)="CreateTicket(createTicket)" autocomplete="on">
           <!-- Modal Header -->
           <div class="modal-header">
             <h4 class="modal-title" style="text-align: center">Report problem</h4>
@@ -63,27 +63,57 @@
                   <label for="companyName" class="sr-only">Company Name</label>
                   <input [readonly]="true" formControlName="companyName" type="text" name="companyName" id="companyName" class="form-control" placeholder="Enter Company Name" [(ngModel)]="gadget.companyName">
                 </div>
+
                 <div class="form-group">
                   <label for="model" class="sr-only">Model</label>
                   <input formControlName="model" type="text" name="model" id="model" class="form-control" placeholder="Enter Model" [(ngModel)]="gadget.model">
+                  <div *ngIf="gadgetform.get('model').invalid && (gadgetform.get('model').dirty || gadgetform.get('model').touched)" class="alert alert-danger">
+                    <div *ngIf="gadgetform.get('model').errors.required"> Model is required</div> 
+                    <div *ngIf="gadgetform.get('model').errors.maxlength"> Model cannot be more than 20 characters long.</div>
+                    <div *ngIf="gadgetform.get('model').errors.minlength"> Model must be at least 3 characters long.</div>                  
+                  </div>
                 </div>
+
                 <div class="form-group mb-4">
                   <label for="serialNo" class="sr-only">SerialNo</label>
-                  <input [readonly]="true" formControlName="serialNo" type="text"  name="serialNo" id="serialNo" class="form-control" placeholder="Enter SerialNo" [(ngModel)]="gadget.serialNo">
+                  <input [readonly]="true" formControlName="serialNo" type="text" name="serialNo" id="serialNo" class="form-control" placeholder="Enter SerialNo" [(ngModel)]="gadget.serialNo">
+                  <div *ngIf="gadgetform.get('serialNo').invalid && (gadgetform.get('serialNo').dirty || gadgetform.get('serialNo').touched)" class="alert alert-danger">
+                    <div *ngIf="gadgetform.get('serialNo').errors.required"> SerialNo is required</div> 
+                    <div *ngIf="gadgetform.get('serialNo').errors.maxlength"> SerialNo cannot be more than 20 characters long.</div>
+                    <div *ngIf="gadgetform.get('serialNo').errors.minlength"> SerialNo must be at least 3 characters long.</div>                  
+                   </div>
                 </div>
+
                 <div class="form-group mb-4">
                   <label for="mcType" class="sr-only">McType</label>
-                  <input [readonly]="true" formControlName="mcType" type="text"  name="mcType" id="mcType" class="form-control" placeholder="Enter McType" [(ngModel)]="gadget.mcType">
+                  <input formControlName="mcType" type="text" name="mcType" id="mcType" class="form-control" placeholder="Enter McType" [(ngModel)]="gadget.mcType">
+                  <div *ngIf="gadgetform.get('mcType').invalid && (gadgetform.get('mcType').dirty || gadgetform.get('mcType').touched)" class="alert alert-danger">
+                    <div *ngIf="gadgetform.get('mcType').errors.required"> McType is required</div> 
+                    <div *ngIf="gadgetform.get('mcType').errors.maxlength"> McType cannot be more than 20 characters long.</div>
+                    <div *ngIf="gadgetform.get('mcType').errors.minlength"> McType must be at least 3 characters long.</div>                  
+                  </div>
                 </div>
-                <div class="form-group">
-                  <label for="problem" class="sr-only">problem</label>
-                  <input formControlName="problem" type="text" name="problem" id="problem" class="form-control" placeholder="Enter Issue">
+
+                <div class="form-group mb-4">
+                  <label for="problem" class="sr-only">Problem</label>
+                  <input formControlName="problem" type="text" name="problem" id="problem" class="form-control" placeholder="Enter Problem" [(ngModel)]="gadget.problem">
+                  <div *ngIf="gadgetform.get('problem').invalid && (gadgetform.get('problem').dirty || gadgetform.get('problem').touched)" class="alert alert-danger">
+                    <div *ngIf="gadgetform.get('problem').errors.required"> Problem is required</div> 
+                    <div *ngIf="gadgetform.get('problem').errors.maxlength"> Problem cannot be more than 20 characters long.</div>
+                    <div *ngIf="gadgetform.get('problem').errors.minlength"> Problem must be at least 3 characters long.</div>                  
+                  </div>
                 </div>
 
                 <div class="form-group">
                   <label for="clientComment" class="sr-only">Client Comment</label>
                   <textarea formControlName="clientComment" type="text" name="clientComment" id="clientComment" class="form-control" placeholder="Enter Comment" rows="5" cols="20"></textarea>
+                  <div *ngIf="gadgetform.get('clientComment').invalid && (gadgetform.get('clientComment').dirty || gadgetform.get('clientComment').touched)" class="alert alert-danger">
+                    <div *ngIf="gadgetform.get('clientComment').errors.required"> Client Comment is required</div> 
+                    <div *ngIf="gadgetform.get('clientComment').errors.maxlength"> Client Comment cannot be more than 250 characters long.</div>
+                    <div *ngIf="gadgetform.get('clientComment').errors.minlength"> Client Comment must be at least 3 characters long.</div>                  
+                  </div>
                 </div>
+
               </div>  
                 <div [hidden]="!isTicketRaised">
                     <h4>Ticket Submited Successfuly!</h4>

@@ -3,54 +3,66 @@
            <div class="container">
              <div class="card login-card">
                      
-                     <form [formGroup]="createTicketForm" #createTicket (ngSubmit)="CreateTicket(createTicket)">
-                         <div class="form-group">
+                     <form [formGroup]="createTicketForm" #createTicket (ngSubmit)="CreateTicket(createTicket)" autocomplete="on">
+                        
+                        <div class="form-group">
                            <label for="companyName" class="sr-only">Company Name</label>
                            <input [readonly]="true" formControlName="companyName" type="text" name="companyName" id="companyName" class="form-control" placeholder="Enter Company Name" [(ngModel)]="CuurentcompanyName">
                          </div>
 
                          <div class="form-group">
-                           <label for="model" class="sr-only">Model</label>
-                           <input formControlName="model" type="text" name="model" id="model" class="form-control" placeholder="Enter Model" >
-                           <!-- <div class="alert alert-danger" *ngIf = "(Model.touched)" style="margin-top: 5px;">
-                           <span *ngIf="Model.errors.required"> *Model is required</span>
-                          </div> -->
-                         </div>
+                            <label for="model" class="sr-only">Model</label>
+                            <input formControlName="model" type="text" name="model" id="model" class="form-control" placeholder="Enter Model">
+                            <div *ngIf="createTicketForm.get('model').invalid && (createTicketForm.get('model').dirty || createTicketForm.get('model').touched)" class="alert alert-danger">
+                              <div *ngIf="createTicketForm.get('model').errors.required"> Model is required</div> 
+                              <div *ngIf="createTicketForm.get('model').errors.maxlength"> Model cannot be more than 20 characters long.</div>
+                              <div *ngIf="createTicketForm.get('model').errors.minlength"> Model must be at least 3 characters long.</div>                  
+                            </div>
+                          </div>
+                          
+                          <div class="form-group">
+                            <label for="serialNo" class="sr-only">SerialNo</label>
+                            <input formControlName="serialNo" type="text" name="serialNo" id="serialNo" class="form-control" placeholder="Enter SerialNo">
+                            <div *ngIf="createTicketForm.get('serialNo').invalid && (createTicketForm.get('serialNo').dirty || createTicketForm.get('serialNo').touched)" class="alert alert-danger">
+                              <div *ngIf="createTicketForm.get('serialNo').errors.required"> SerialNo is required</div> 
+                              <div *ngIf="createTicketForm.get('serialNo').errors.maxlength"> SerialNo cannot be more than 20 characters long.</div>
+                              <div *ngIf="createTicketForm.get('serialNo').errors.minlength"> SerialNo must be at least 3 characters long.</div>                  
+                             </div>
+                          </div>
+                          
+                          <div class="form-group">
+                            <label for="mcType" class="sr-only">McType</label>
+                            <input formControlName="mcType" type="text" name="mcType" id="mcType" class="form-control" placeholder="Enter McType">
+                            <div *ngIf="createTicketForm.get('mcType').invalid && (createTicketForm.get('mcType').dirty || createTicketForm.get('mcType').touched)" class="alert alert-danger">
+                              <div *ngIf="createTicketForm.get('mcType').errors.required"> McType is required</div> 
+                              <div *ngIf="createTicketForm.get('mcType').errors.maxlength"> McType cannot be more than 20 characters long.</div>
+                              <div *ngIf="createTicketForm.get('mcType').errors.minlength"> McType must be at least 3 characters long.</div>                  
+                            </div>
+                          </div>
 
-                         <div class="form-group mb-4">
-                           <label for="serialNo" class="sr-only">SerialNo</label>
-                           <input formControlName="serialNo" type="text" name="serialNo" id="serialNo" class="form-control" placeholder="Enter SerialNo">
-                           <!-- <div class="alert alert-danger" *ngIf = "(SerialNo.touched)" style="margin-top: 5px;">
-                           <span *ngIf="SerialNo.errors.required"> *SerialNo is required</span>
-                           </div> -->
-                         </div>
-
-                         <div class="form-group mb-4">
-                           <label for="mcType" class="sr-only">McType</label>
-                           <input formControlName="mcType" type="text" name="mcType" id="mcType" class="form-control" placeholder="Enter McType">
-                           <!-- <div class="alert alert-danger" *ngIf = "(McType.touched)" style="margin-top: 5px;">
-                           <span *ngIf="McType.errors.required"> *McType is required</span>
-                          </div> -->
-                         </div>
-
-                         <div class="form-group">
-                           <label for="problem" class="sr-only">Problem</label>
-                           <input formControlName="problem" type="text" name="problem" id="problem" class="form-control" placeholder="Enter problem">
-                           <!-- <div class="alert alert-danger" *ngIf = "(Problem.touched)" style="margin-top: 5px;">
-                           <span *ngIf="Problem.errors.required"> *Problem is required</span>
-                           </div> -->
-                         </div>
+                          <div class="form-group">
+                            <label for="problem" class="sr-only">Problem</label>
+                            <input formControlName="problem" type="text" name="problem" id="problem" class="form-control" placeholder="Enter Problem">
+                            <div *ngIf="createTicketForm.get('problem').invalid && (createTicketForm.get('problem').dirty || createTicketForm.get('problem').touched)" class="alert alert-danger">
+                              <div *ngIf="createTicketForm.get('problem').errors.required"> Problem is required</div> 
+                              <div *ngIf="createTicketForm.get('problem').errors.maxlength"> Problem cannot be more than 20 characters long.</div>
+                              <div *ngIf="createTicketForm.get('problem').errors.minlength"> Problem must be at least 3 characters long.</div>                  
+                             </div>
+                          </div>
 
                          <div class="form-group">
                            <label for="clientComment" class="sr-only">Client Comment</label>
                            <textarea formControlName="clientComment" name="clientComment" id="clientComment" placeholder="Enter Comment" rows="4" cols="50"></textarea>
-                           <!-- <span *ngIf="ClientComment.errors?.minlength"> Discription must be at least 5 characters long. </span>
-                           <span *ngIf="ClientComment.errors?.maxlength"> Discription can be max 10 characters long. </span> 
-                           </div>  -->
+                            <div *ngIf="createTicketForm.get('clientComment').invalid && (createTicketForm.get('clientComment').dirty || createTicketForm.get('clientComment').touched)" class="alert alert-danger">
+                              <div *ngIf="createTicketForm.get('clientComment').errors.required"> Client Comment is required</div> 
+                              <div *ngIf="createTicketForm.get('clientComment').errors.maxlength"> Client Comment cannot be more than 250 characters long.</div>
+                              <div *ngIf="createTicketForm.get('clientComment').errors.minlength"> Client Comment must be at least 3 characters long.</div>                  
+                            </div>
                         </div>
-
-                         <input name="rasieTicket" id="rasieTicket" class="btn btn-block login-btn mb-4" type="submit" value="Raise Ticket" >
-                     
+                        
+                        <div>
+                         <input name="rasieTicket" id="rasieTicket" class="btn btn-block login-btn mb-4" type="submit" value="Raise Ticket">
+                        </div>
                         </form>
                      </div>
                  </div>

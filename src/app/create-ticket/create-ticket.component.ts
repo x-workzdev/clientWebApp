@@ -21,11 +21,11 @@ export class CreateTicketComponent implements OnInit {
   }
     createTicketForm = new FormGroup({
     companyName: new FormControl('' , Validators.required),
-    model: new FormControl('' , Validators.required),
-    serialNo: new FormControl('', Validators.required),
-    mcType : new FormControl('' , Validators.required),
-    problem : new FormControl('' , Validators.required),
-    clientComment: new FormControl('' , Validators.required),
+    model: new FormControl('' , [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
+    serialNo: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
+    mcType : new FormControl('' , [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
+    problem : new FormControl('' , [Validators.required, Validators.minLength(3), Validators.maxLength(20)]),
+    clientComment: new FormControl('' , [Validators.required, Validators.minLength(3), Validators.maxLength(250)]),
   });
 
 CreateTicket(createTicket)

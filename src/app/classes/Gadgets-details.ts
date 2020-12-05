@@ -7,4 +7,5 @@ export class GadgetDetails {
     mcType : string;
     dateOfAssigne : string;
     status : string;
+    problem:string;
 }
