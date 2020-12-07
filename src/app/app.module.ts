@@ -13,6 +13,8 @@ import { TicketsComponent } from './tickets/tickets.component';
 import { ViewGadgetsComponent } from './gadgets/gadgets.component';
 import { LoginService } from './login/login.service';
 import { CreateTicketComponent } from './create-ticket/create-ticket.component';
+import { DeviceDetectorService } from 'ngx-device-detector';
+import { UniversalDeviceDetectorService } from './universal-device-detector.service';
 
 @NgModule({
   declarations: [
@@ -33,9 +35,12 @@ import { CreateTicketComponent } from './create-ticket/create-ticket.component';
     ReactiveFormsModule,
     BrowserModule,
     HttpClientModule,
-    DataTablesModule
+    DataTablesModule,
   ],
-  providers: [LoginService,AppComponent],
-  bootstrap: [AppComponent,AppComponent]
+  
+  
+  providers: [LoginService,DeviceDetectorService],
+  bootstrap: [AppComponent],
+  // useClass: UniversalDeviceDetectorService
 })
 export class AppModule { }

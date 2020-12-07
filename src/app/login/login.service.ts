@@ -13,7 +13,7 @@ import { AppComponent } from '../app.component';
 
 export class LoginService {
 
-  constructor(private httpClient: HttpClient, private router : Router,private app:AppComponent) { }
+  constructor(private httpClient: HttpClient, private router : Router) { }
 
 
   setDisplay:boolean;
